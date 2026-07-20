@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN SYSTEM — tông VÀNG (gold) + ĐEN (charcoal)
+   Chỉ áp dụng cho frontend site (không đụng admin Payload).
+   ============================================================ */
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-display: 'Sora', var(--font-sans);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-sand text-ink-800 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight text-ink-900;
+  }
+
+  /* Ký tự Hàn/Nhật hiển thị đủ nét với line-height thoáng hơn */
+  :lang(ko), :lang(ja) {
+    line-height: 1.7;
+  }
+}
+
+@layer components {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Nút chính (vàng) */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-gold px-6 py-3
+           font-semibold text-ink-900 shadow-sm transition
+           hover:bg-gold-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-700
+           focus-visible:ring-offset-2;
+  }
+
+  /* Nút phụ trên nền tối */
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/40 px-6 py-3
+           font-semibold text-white transition hover:border-white hover:bg-white/10
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-white;
+  }
+
+  /* Nút phụ trên nền sáng */
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-ink-800 px-6 py-3
+           font-semibold text-ink-900 transition hover:bg-ink-900 hover:text-white
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-ink-800 focus-visible:ring-offset-2;
+  }
+
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .card {
+    @apply overflow-hidden rounded-card border border-sand-200 bg-white shadow-sm;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-widest text-gold-700;
+  }
+
+  /* Link nav với gạch chân vàng khi hover/active */
+  .nav-link {
+    @apply relative text-sm font-medium text-ink-700 transition hover:text-ink-900;
+  }
+  .nav-link[data-active='true'] {
+    @apply text-ink-900;
+  }
+  .nav-link[data-active='true']::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-0.5 w-full bg-gold;
+  }
+}

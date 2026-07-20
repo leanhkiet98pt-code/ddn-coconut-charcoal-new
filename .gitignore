@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+/dist
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env — KHÔNG commit credential
+.env
+.env.*
+.env*.local
+# ...nhưng VẪN commit file mẫu để người khác biết cần điền gì
+!.env.example
+
+# payload / sqlite database + uploads
+/ddn.db
+/ddn.db-shm
+/ddn.db-wal
+*.db
+*.db-journal
+/media
+/public/media
+
+# typescript
+*.tsbuildinfo
+
+# dev logs tạm
+.devlog.txt
+.buildlog.txt
+.seedlog.txt
+
+# ide
+.idea
+.vscode

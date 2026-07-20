@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "home": "홈",
+    "products": "제품",
+    "production": "생산 공정",
+    "certificates": "인증서",
+    "exportMarkets": "수출 실적",
+    "oem": "OEM & 패키징",
+    "about": "회사 소개",
+    "blog": "블로그",
+    "contact": "문의",
+    "requestQuote": "견적 요청"
+  },
+  "common": {
+    "readMore": "자세히 보기",
+    "viewAll": "전체 보기",
+    "viewAllProducts": "전체 제품 보기",
+    "learnMore": "더 알아보기",
+    "downloadSpecSheet": "제품 사양서 다운로드 (PDF)",
+    "requestQuote": "견적 요청",
+    "getQuote": "견적 받기",
+    "sendInquiry": "문의 보내기",
+    "submitting": "전송 중…",
+    "loading": "불러오는 중…",
+    "allCategories": "전체 카테고리",
+    "backToProducts": "제품 목록으로",
+    "backToBlog": "블로그로 돌아가기",
+    "noItems": "표시할 항목이 아직 없습니다.",
+    "contentComingSoon": "콘텐츠 준비 중입니다.",
+    "imageComingSoon": "이미지 준비 중",
+    "publishedOn": "게시일",
+    "chatOnWhatsApp": "WhatsApp으로 문의"
+  },
+  "languageSwitcher": {
+    "label": "언어",
+    "en": "EN",
+    "ko": "KO",
+    "ja": "JP"
+  },
+  "home": {
+    "heroKicker": "숯 제조 및 수출 기업",
+    "heroTitle": "수출을 위해 만든 프리미엄 숯",
+    "heroSubtitle": "코코넛 숯, BBQ 브리켓, 백탄(비장탄), 시샤 숯 — 일관되고 바이어 맞춤형 규격으로 생산합니다.",
+    "heroCtaPrimary": "견적 요청",
+    "heroCtaSecondary": "제품 보기",
+    "since": "글로벌 바이어와 함께한 지",
+    "productGroupsTitle": "제품군",
+    "productGroupsSubtitle": "모든 제품에 상세 기술 사양서가 제공됩니다.",
+    "factoryTitle": "생산 현장",
+    "factorySubtitle": "중간 무역상이 아닌, 실제 공장과 실제 생산 능력.",
+    "certificatesTitle": "인증 및 규격 준수",
+    "certificatesSubtitle": "국제 바이어가 신뢰하는 서류.",
+    "exportTitle": "수출 실적",
+    "exportSubtitle": "전 세계 수입업체, 유통업체, 브랜드에 공급합니다.",
+    "processTitle": "주문 방법",
+    "processSubtitle": "간단하고 투명한 구매 절차.",
+    "faqTitle": "자주 묻는 질문",
+    "ctaTitle": "숯 소싱을 시작할 준비가 되셨나요?",
+    "ctaSubtitle": "요구사항을 보내주시면 사양, MOQ, FOB/CIF 가격이 포함된 견적을 드립니다.",
+    "ctaButton": "견적 요청하기"
+  },
+  "trustBar": {
+    "containersPerMonth": "월간 컨테이너",
+    "countries": "수출 국가",
+    "certifications": "인증",
+    "yearsExporting": "수출 경력(년)"
+  },
+  "products": {
+    "title": "제품",
+    "subtitle": "당사가 생산하는 모든 숯 제품군의 기술 사양.",
+    "specifications": "사양",
+    "gallery": "갤러리",
+    "applications": "용도",
+    "category": "카테고리",
+    "moq": "MOQ",
+    "specsTable": {
+      "fixedCarbon": "고정 탄소",
+      "ash": "회분",
+      "moisture": "수분",
+      "volatileMatter": "휘발분",
+      "calorificValue": "발열량",
+      "burningTime": "연소 시간",
+      "dimensions": "규격",
+      "packing": "포장",
+      "moq": "최소 주문 수량 (MOQ)",
+      "loadingPort": "선적항 / FCL",
+      "hsCode": "HS 코드"
+    },
+    "requestQuoteForProduct": "이 제품 견적 요청"
+  },
+  "production": {
+    "title": "생산 공정",
+    "subtitle": "원재료부터 수출 준비 완료까지, 당사가 직접 관리합니다.",
+    "step": "단계"
+  },
+  "certificates": {
+    "title": "인증서",
+    "subtitle": "품질, 안전 및 규격 준수 서류.",
+    "viewDocument": "서류 보기"
+  },
+  "exportMarkets": {
+    "title": "수출 실적",
+    "subtitle": "당사가 공급하는 국가 및 지역.",
+    "region": "지역",
+    "country": "국가"
+  },
+  "oem": {
+    "title": "OEM & 자체 브랜드 패키징",
+    "subtitle": "고객 브랜드로 생산합니다 — 벌크부터 리테일 포장까지.",
+    "cta": "자체 브랜드 프로젝트 상담"
+  },
+  "about": {
+    "title": "회사 소개",
+    "subtitle": "검증 가능한 제조 및 수출 기업.",
+    "companyDetails": "회사 정보",
+    "legalEntity": "법인명",
+    "businessCode": "사업자 등록번호",
+    "taxCode": "세금 코드",
+    "founded": "설립",
+    "offices": "사업장"
+  },
+  "blog": {
+    "title": "블로그 & 인사이트",
+    "subtitle": "업계 지식, 소싱 팁 및 회사 소식.",
+    "readingTime": "분 소요"
+  },
+  "contact": {
+    "title": "견적 요청",
+    "subtitle": "필요하신 내용을 알려주세요. 영업팀이 영업일 기준 1일 이내에 답변드립니다.",
+    "infoTitle": "연락처 정보",
+    "email": "이메일",
+    "phone": "전화",
+    "whatsapp": "WhatsApp",
+    "address": "주소",
+    "formTitle": "RFQ — 견적 요청서"
+  },
+  "rfq": {
+    "product": "관심 제품",
+    "productPlaceholder": "예: 코코넛 숯",
+    "quantity": "월간 수량",
+    "quantityPlaceholder": "예: 20ft FCL x 3",
+    "destinationPort": "도착항",
+    "destinationPortPlaceholder": "예: 부산, 한국",
+    "incoterm": "인코텀즈",
+    "incotermPlaceholder": "인코텀즈 선택",
+    "packaging": "포장 요구사항",
+    "packagingPlaceholder": "예: 10kg 카톤, 자체 브랜드",
+    "targetPrice": "목표 가격",
+    "targetPricePlaceholder": "예: USD 950 / MT CIF",
+    "name": "성함",
+    "namePlaceholder": "이름",
+    "company": "회사명",
+    "companyPlaceholder": "회사명",
+    "emailAddress": "업무용 이메일",
+    "emailPlaceholder": "you@company.com",
+    "phone": "전화 / WhatsApp",
+    "phonePlaceholder": "+82 ...",
+    "message": "메시지",
+    "messagePlaceholder": "요구사항에 대한 추가 정보를 입력해 주세요…",
+    "submit": "문의 보내기",
+    "required": "필수",
+    "successTitle": "감사합니다 — 문의가 접수되었습니다.",
+    "successBody": "영업팀이 영업일 기준 1일 이내에 연락드리겠습니다.",
+    "errorTitle": "오류가 발생했습니다.",
+    "errorBody": "다시 시도하시거나 이메일로 직접 문의해 주세요.",
+    "validationRequired": "필수 항목을 모두 입력해 주세요.",
+    "validationEmail": "유효한 이메일 주소를 입력해 주세요."
+  },
+  "footer": {
+    "tagline": "글로벌 B2B 바이어를 위한 숯 제조 및 수출 기업.",
+    "quickLinks": "바로가기",
+    "products": "제품",
+    "company": "회사",
+    "contact": "문의",
+    "rightsReserved": "All rights reserved.",
+    "legalInfo": "사업자 등록번호",
+    "taxInfo": "세금 코드"
+  },
+  "meta": {
+    "defaultTitle": "숯 제조 및 수출 기업",
+    "defaultDescription": "국제 B2B 바이어를 위한 코코넛 숯, BBQ 브리켓, 백탄, 시샤 숯 제조 및 수출 기업.",
+    "titleTemplate": "%s"
+  },
+  "notFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "body": "찾으시는 페이지가 존재하지 않습니다.",
+    "backHome": "홈으로 돌아가기"
+  }
+}

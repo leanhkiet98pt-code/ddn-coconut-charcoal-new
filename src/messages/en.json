@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "production": "Production",
+    "certificates": "Certificates",
+    "exportMarkets": "Export Track Record",
+    "oem": "OEM & Packaging",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "requestQuote": "Request a Quote"
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "viewAllProducts": "View all products",
+    "learnMore": "Learn more",
+    "downloadSpecSheet": "Download Spec Sheet (PDF)",
+    "requestQuote": "Request a Quote",
+    "getQuote": "Get a Quote",
+    "sendInquiry": "Send Inquiry",
+    "submitting": "Sending…",
+    "loading": "Loading…",
+    "allCategories": "All categories",
+    "backToProducts": "Back to products",
+    "backToBlog": "Back to blog",
+    "noItems": "No items to display yet.",
+    "contentComingSoon": "Content coming soon.",
+    "imageComingSoon": "Image coming soon",
+    "publishedOn": "Published on",
+    "chatOnWhatsApp": "Chat on WhatsApp"
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "en": "EN",
+    "ko": "KO",
+    "ja": "JP"
+  },
+  "home": {
+    "heroKicker": "Charcoal Manufacturer & Exporter",
+    "heroTitle": "Premium charcoal, made for export",
+    "heroSubtitle": "Coconut shell charcoal, BBQ briquettes, white charcoal and shisha charcoal — manufactured to consistent, buyer-ready specifications.",
+    "heroCtaPrimary": "Request a Quote",
+    "heroCtaSecondary": "View Products",
+    "since": "Serving global buyers since",
+    "productGroupsTitle": "Product Groups",
+    "productGroupsSubtitle": "Every product ships with a full technical spec sheet.",
+    "factoryTitle": "Inside Our Factory",
+    "factorySubtitle": "Real production, real capacity — not a trading middleman.",
+    "certificatesTitle": "Certifications & Compliance",
+    "certificatesSubtitle": "Documentation international buyers rely on.",
+    "exportTitle": "Export Track Record",
+    "exportSubtitle": "Shipping to importers, distributors and brands worldwide.",
+    "processTitle": "How to Order",
+    "processSubtitle": "A simple, transparent buying process.",
+    "faqTitle": "Frequently Asked Questions",
+    "ctaTitle": "Ready to source your charcoal?",
+    "ctaSubtitle": "Send us your requirements and receive a quotation with specs, MOQ and FOB/CIF pricing.",
+    "ctaButton": "Request a Quotation"
+  },
+  "trustBar": {
+    "containersPerMonth": "Containers / month",
+    "countries": "Export countries",
+    "certifications": "Certifications",
+    "yearsExporting": "Years exporting"
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Technical specifications for every charcoal line we manufacture.",
+    "specifications": "Specifications",
+    "gallery": "Gallery",
+    "applications": "Applications",
+    "category": "Category",
+    "moq": "MOQ",
+    "specsTable": {
+      "fixedCarbon": "Fixed Carbon",
+      "ash": "Ash Content",
+      "moisture": "Moisture",
+      "volatileMatter": "Volatile Matter",
+      "calorificValue": "Calorific Value",
+      "burningTime": "Burning Time",
+      "dimensions": "Dimensions",
+      "packing": "Packing",
+      "moq": "Minimum Order Quantity (MOQ)",
+      "loadingPort": "Loading Port / FCL",
+      "hsCode": "HS Code"
+    },
+    "requestQuoteForProduct": "Request a quote for this product"
+  },
+  "production": {
+    "title": "Production Process",
+    "subtitle": "From raw material to export-ready product, under our own control.",
+    "step": "Step"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "subtitle": "Quality, safety and compliance documentation.",
+    "viewDocument": "View document"
+  },
+  "exportMarkets": {
+    "title": "Export Track Record",
+    "subtitle": "Countries and regions we ship to.",
+    "region": "Region",
+    "country": "Country"
+  },
+  "oem": {
+    "title": "OEM & Private Label Packaging",
+    "subtitle": "We produce under your brand — from bulk to retail-ready packaging.",
+    "cta": "Discuss your private label project"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "A manufacturer and exporter you can verify.",
+    "companyDetails": "Company Details",
+    "legalEntity": "Legal Entity",
+    "businessCode": "Business Registration No.",
+    "taxCode": "Tax Code",
+    "founded": "Founded",
+    "offices": "Offices"
+  },
+  "blog": {
+    "title": "Blog & Insights",
+    "subtitle": "Industry knowledge, sourcing tips and company news.",
+    "readingTime": "min read"
+  },
+  "contact": {
+    "title": "Request a Quotation",
+    "subtitle": "Tell us what you need. Our sales team replies within one business day.",
+    "infoTitle": "Contact Information",
+    "email": "Email",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "address": "Address",
+    "formTitle": "RFQ — Request for Quotation"
+  },
+  "rfq": {
+    "product": "Product of interest",
+    "productPlaceholder": "e.g. Coconut Shell Charcoal",
+    "quantity": "Quantity per month",
+    "quantityPlaceholder": "e.g. 3 x 20ft FCL",
+    "destinationPort": "Destination port",
+    "destinationPortPlaceholder": "e.g. Busan, Korea",
+    "incoterm": "Incoterm",
+    "incotermPlaceholder": "Select Incoterm",
+    "packaging": "Packaging requirement",
+    "packagingPlaceholder": "e.g. 10kg carton, private label",
+    "targetPrice": "Target price",
+    "targetPricePlaceholder": "e.g. USD 950 / MT CIF",
+    "name": "Your name",
+    "namePlaceholder": "Full name",
+    "company": "Company",
+    "companyPlaceholder": "Company name",
+    "emailAddress": "Business email",
+    "emailPlaceholder": "you@company.com",
+    "phone": "Phone / WhatsApp",
+    "phonePlaceholder": "+82 ...",
+    "message": "Message",
+    "messagePlaceholder": "Any additional details about your requirement…",
+    "submit": "Send Inquiry",
+    "required": "Required",
+    "successTitle": "Thank you — your inquiry has been received.",
+    "successBody": "Our sales team will get back to you within one business day.",
+    "errorTitle": "Something went wrong.",
+    "errorBody": "Please try again, or email us directly.",
+    "validationRequired": "Please fill in all required fields.",
+    "validationEmail": "Please enter a valid email address."
+  },
+  "footer": {
+    "tagline": "Charcoal manufacturer & exporter for global B2B buyers.",
+    "quickLinks": "Quick Links",
+    "products": "Products",
+    "company": "Company",
+    "contact": "Contact",
+    "rightsReserved": "All rights reserved.",
+    "legalInfo": "Business Reg. No.",
+    "taxInfo": "Tax Code"
+  },
+  "meta": {
+    "defaultTitle": "Charcoal Manufacturer & Exporter",
+    "defaultDescription": "Manufacturer and exporter of coconut shell charcoal, BBQ briquettes, white charcoal and shisha charcoal for international B2B buyers.",
+    "titleTemplate": "%s"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist.",
+    "backHome": "Back to home"
+  }
+}

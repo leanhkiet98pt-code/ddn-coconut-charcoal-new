@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "products": "製品",
+    "production": "製造工程",
+    "certificates": "認証",
+    "exportMarkets": "輸出実績",
+    "oem": "OEM・パッケージング",
+    "about": "会社概要",
+    "blog": "ブログ",
+    "contact": "お問い合わせ",
+    "requestQuote": "見積依頼"
+  },
+  "common": {
+    "readMore": "続きを読む",
+    "viewAll": "すべて見る",
+    "viewAllProducts": "すべての製品を見る",
+    "learnMore": "詳しく見る",
+    "downloadSpecSheet": "仕様書をダウンロード (PDF)",
+    "requestQuote": "見積依頼",
+    "getQuote": "見積を取得",
+    "sendInquiry": "問い合わせを送信",
+    "submitting": "送信中…",
+    "loading": "読み込み中…",
+    "allCategories": "すべてのカテゴリー",
+    "backToProducts": "製品一覧へ戻る",
+    "backToBlog": "ブログへ戻る",
+    "noItems": "表示する項目がまだありません。",
+    "contentComingSoon": "コンテンツは準備中です。",
+    "imageComingSoon": "画像は準備中",
+    "publishedOn": "公開日",
+    "chatOnWhatsApp": "WhatsAppで問い合わせ"
+  },
+  "languageSwitcher": {
+    "label": "言語",
+    "en": "EN",
+    "ko": "KO",
+    "ja": "JP"
+  },
+  "home": {
+    "heroKicker": "木炭の製造・輸出企業",
+    "heroTitle": "輸出のために作られたプレミアム木炭",
+    "heroSubtitle": "ヤシ殻炭、BBQブリケット、白炭（備長炭）、シーシャ炭 — 一貫したバイヤー向け規格で製造しています。",
+    "heroCtaPrimary": "見積依頼",
+    "heroCtaSecondary": "製品を見る",
+    "since": "グローバルバイヤーへの供給実績",
+    "productGroupsTitle": "製品グループ",
+    "productGroupsSubtitle": "すべての製品に詳細な技術仕様書が付属します。",
+    "factoryTitle": "工場の内部",
+    "factorySubtitle": "仲介業者ではなく、実際の工場と生産能力。",
+    "certificatesTitle": "認証・コンプライアンス",
+    "certificatesSubtitle": "国際バイヤーが信頼する書類。",
+    "exportTitle": "輸出実績",
+    "exportSubtitle": "世界中の輸入業者・卸売業者・ブランドへ供給。",
+    "processTitle": "ご注文の流れ",
+    "processSubtitle": "シンプルで透明性のある購入プロセス。",
+    "faqTitle": "よくある質問",
+    "ctaTitle": "木炭の調達を始めますか？",
+    "ctaSubtitle": "ご要望をお送りいただければ、仕様・MOQ・FOB/CIF価格を含む見積をお出しします。",
+    "ctaButton": "見積を依頼する"
+  },
+  "trustBar": {
+    "containersPerMonth": "月間コンテナ数",
+    "countries": "輸出国",
+    "certifications": "認証",
+    "yearsExporting": "輸出年数"
+  },
+  "products": {
+    "title": "製品",
+    "subtitle": "当社が製造するすべての木炭ラインの技術仕様。",
+    "specifications": "仕様",
+    "gallery": "ギャラリー",
+    "applications": "用途",
+    "category": "カテゴリー",
+    "moq": "MOQ",
+    "specsTable": {
+      "fixedCarbon": "固定炭素",
+      "ash": "灰分",
+      "moisture": "水分",
+      "volatileMatter": "揮発分",
+      "calorificValue": "発熱量",
+      "burningTime": "燃焼時間",
+      "dimensions": "寸法",
+      "packing": "梱包",
+      "moq": "最小発注数量 (MOQ)",
+      "loadingPort": "船積港 / FCL",
+      "hsCode": "HSコード"
+    },
+    "requestQuoteForProduct": "この製品の見積を依頼"
+  },
+  "production": {
+    "title": "製造工程",
+    "subtitle": "原材料から輸出可能な製品まで、当社が一貫管理します。",
+    "step": "ステップ"
+  },
+  "certificates": {
+    "title": "認証",
+    "subtitle": "品質・安全・コンプライアンス書類。",
+    "viewDocument": "書類を見る"
+  },
+  "exportMarkets": {
+    "title": "輸出実績",
+    "subtitle": "当社が供給する国と地域。",
+    "region": "地域",
+    "country": "国"
+  },
+  "oem": {
+    "title": "OEM・プライベートブランド パッケージング",
+    "subtitle": "お客様のブランドで製造します — バルクからリテール向けパッケージまで。",
+    "cta": "プライベートブランド案件を相談する"
+  },
+  "about": {
+    "title": "会社概要",
+    "subtitle": "検証可能な製造・輸出企業。",
+    "companyDetails": "会社情報",
+    "legalEntity": "法人名",
+    "businessCode": "事業者登録番号",
+    "taxCode": "税コード",
+    "founded": "設立",
+    "offices": "拠点"
+  },
+  "blog": {
+    "title": "ブログ・インサイト",
+    "subtitle": "業界知識、調達のヒント、企業ニュース。",
+    "readingTime": "分で読めます"
+  },
+  "contact": {
+    "title": "見積依頼",
+    "subtitle": "ご要望をお知らせください。営業チームが1営業日以内に返信します。",
+    "infoTitle": "連絡先情報",
+    "email": "メール",
+    "phone": "電話",
+    "whatsapp": "WhatsApp",
+    "address": "住所",
+    "formTitle": "RFQ — 見積依頼書"
+  },
+  "rfq": {
+    "product": "ご関心のある製品",
+    "productPlaceholder": "例: ヤシ殻炭",
+    "quantity": "月間数量",
+    "quantityPlaceholder": "例: 20ft FCL x 3",
+    "destinationPort": "仕向港",
+    "destinationPortPlaceholder": "例: 東京, 日本",
+    "incoterm": "インコタームズ",
+    "incotermPlaceholder": "インコタームズを選択",
+    "packaging": "梱包要件",
+    "packagingPlaceholder": "例: 10kgカートン, プライベートブランド",
+    "targetPrice": "希望価格",
+    "targetPricePlaceholder": "例: USD 950 / MT CIF",
+    "name": "お名前",
+    "namePlaceholder": "氏名",
+    "company": "会社名",
+    "companyPlaceholder": "会社名",
+    "emailAddress": "ビジネスメール",
+    "emailPlaceholder": "you@company.com",
+    "phone": "電話 / WhatsApp",
+    "phonePlaceholder": "+81 ...",
+    "message": "メッセージ",
+    "messagePlaceholder": "ご要望の詳細をご記入ください…",
+    "submit": "問い合わせを送信",
+    "required": "必須",
+    "successTitle": "ありがとうございます — お問い合わせを受け付けました。",
+    "successBody": "営業チームが1営業日以内にご連絡いたします。",
+    "errorTitle": "エラーが発生しました。",
+    "errorBody": "もう一度お試しいただくか、メールで直接お問い合わせください。",
+    "validationRequired": "必須項目をすべて入力してください。",
+    "validationEmail": "有効なメールアドレスを入力してください。"
+  },
+  "footer": {
+    "tagline": "グローバルB2Bバイヤー向けの木炭製造・輸出企業。",
+    "quickLinks": "クイックリンク",
+    "products": "製品",
+    "company": "会社",
+    "contact": "お問い合わせ",
+    "rightsReserved": "All rights reserved.",
+    "legalInfo": "事業者登録番号",
+    "taxInfo": "税コード"
+  },
+  "meta": {
+    "defaultTitle": "木炭の製造・輸出企業",
+    "defaultDescription": "国際B2Bバイヤー向けのヤシ殻炭、BBQブリケット、白炭、シーシャ炭の製造・輸出企業。",
+    "titleTemplate": "%s"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "body": "お探しのページは存在しません。",
+    "backHome": "ホームへ戻る"
+  }
+}
