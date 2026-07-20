@@ -458,10 +458,32 @@ export interface ProductionStep {
  */
 export interface Inquiry {
   id: number;
-  status?: ('new' | 'contacted' | 'quoted' | 'closed') | null;
   /**
-   * Ngôn ngữ khi khách gửi.
+   * Vòng đời lead — tự cập nhật theo mức độ hoàn thiện form.
    */
+  status?: ('partial' | 'qualified' | 'complete') | null;
+  /**
+   * Trạng thái xử lý của sales (tự điền).
+   */
+  salesStage?: ('new' | 'contacted' | 'quoted' | 'closed') | null;
+  qualified?: boolean | null;
+  /**
+   * Đã gửi email báo sales cho phiên này chưa.
+   */
+  notified?: boolean | null;
+  /**
+   * Đã đẩy dòng qualified sang Google Sheet (qua Make) chưa — tránh gửi trùng.
+   */
+  pushedToSheet?: boolean | null;
+  /**
+   * Định danh phiên khách (chống trùng).
+   */
+  sessionId?: string | null;
+  /**
+   * Trang khách điền form.
+   */
+  sourcePage?: string | null;
+  lastUpdated?: string | null;
   locale?: string | null;
   product?: string | null;
   /**
@@ -472,9 +494,9 @@ export interface Inquiry {
   incoterm?: string | null;
   packaging?: string | null;
   targetPrice?: string | null;
-  name: string;
+  name?: string | null;
   company?: string | null;
-  email: string;
+  email?: string | null;
   phone?: string | null;
   message?: string | null;
   updatedAt: string;
@@ -786,6 +808,13 @@ export interface ProductionStepsSelect<T extends boolean = true> {
  */
 export interface InquiriesSelect<T extends boolean = true> {
   status?: T;
+  salesStage?: T;
+  qualified?: T;
+  notified?: T;
+  pushedToSheet?: T;
+  sessionId?: T;
+  sourcePage?: T;
+  lastUpdated?: T;
   locale?: T;
   product?: T;
   quantity?: T;

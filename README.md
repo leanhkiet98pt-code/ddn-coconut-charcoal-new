@@ -5,8 +5,9 @@ than trắng/binchotan, than shisha). Buyer quốc tế vào xem → tin tưởn
 (Request for Quotation).
 
 - **Frontend + SEO**: Next.js 15 (App Router, TypeScript, Tailwind), đa ngôn ngữ EN / KO / JP.
-- **CMS**: Payload 3 self-host, DB **SQLite** — chủ doanh nghiệp tự sửa mọi nội dung tại `/admin`,
-  **không cần đụng code**.
+- **CMS**: Payload 3 — chủ doanh nghiệp tự sửa mọi nội dung tại `/admin`, **không cần đụng code**.
+- **Hạ tầng (deploy Vercel)**: DB = **Postgres (Neon)**, media = **Vercel Blob** (serverless-friendly,
+  không dùng ổ đĩa local).
 
 ---
 
@@ -17,12 +18,21 @@ than trắng/binchotan, than shisha). Buyer quốc tế vào xem → tin tưởn
 
 ## 2. Cài đặt & chạy local
 
+Cần một **Postgres** để chạy (kể cả local). Dễ nhất: tạo 1 database miễn phí trên
+[Neon](https://neon.tech) và dùng chung cho cả local lẫn production, hoặc chạy Postgres cục bộ.
+
 ```bash
-npm install           # cài dependencies
-cp .env.example .env   # tạo file biến môi trường (xem mục 6) — Windows: copy .env.example .env
-npm run seed          # nạp dữ liệu mẫu (4 sản phẩm, chứng chỉ, blog, thị trường…)
-npm run dev           # chạy dev server
+npm install                 # cài dependencies
+cp .env.example .env         # tạo file env (Windows: copy .env.example .env)
+# → Mở .env, điền PAYLOAD_SECRET và DATABASE_URI (connection string Postgres/Neon)
+npm run seed                # nạp dữ liệu mẫu (tự tạo bảng ở chế độ dev)
+npm run dev                 # chạy dev server
 ```
+
+> Schema quản lý bằng **migration** (cả dev lẫn prod) — ổn định trên Neon. Lần đầu / sau khi đổi
+> collection/field: chạy `npm run migrate:create` rồi `npm run migrate` (xem mục 7). `npm run seed`
+> chỉ nạp dữ liệu mẫu, không tạo bảng.
+> Chưa có `BLOB_READ_WRITE_TOKEN` khi dev → ảnh upload tạm lưu local disk; có token → lưu Vercel Blob.
 
 Mở trình duyệt:
 
@@ -109,12 +119,14 @@ Có **2 lớp** ngôn ngữ:
 | Biến | Bắt buộc | Mô tả |
 |------|:---:|------|
 | `PAYLOAD_SECRET` | ✅ | Chuỗi bí mật ký JWT/cookie. Sinh: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
-| `DATABASE_URI` | ✅ | Kết nối SQLite, mặc định `file:./ddn.db` |
-| `NEXT_PUBLIC_SITE_URL` | ✅ | Domain thật (canonical + hreflang + sitemap). Local: `http://localhost:3000`; production: `https://your-domain.com` |
+| `DATABASE_URI` | ✅ | Connection string **Postgres (Neon)**. Dạng `postgresql://user:pass@ep-xxx.region.aws.neon.tech/db?sslmode=require` (dùng chuỗi *Pooled connection* của Neon). |
+| `BLOB_READ_WRITE_TOKEN` | ✅ (prod) | Token **Vercel Blob** để lưu media. Bỏ trống khi dev → ảnh lưu local disk. |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | Domain thật (canonical + hreflang + sitemap + serverURL + CSRF/CORS). Local: `http://localhost:3000`; production: `https://your-domain.com` |
 | `SMTP_HOST` | — | Máy chủ SMTP gửi email RFQ. **Để trống** → đơn vẫn lưu, email chỉ log ra console. |
 | `SMTP_PORT` | — | Cổng SMTP (587 mặc định, 465 = SSL) |
 | `SMTP_USER` / `SMTP_PASS` | — | Tài khoản SMTP |
 | `SMTP_FROM` | — | Địa chỉ hiển thị ở trường *From* |
+| `MAKE_WEBHOOK_URL` | — | URL webhook Make.com để đẩy lead sang Google Sheet. **Để trống** → bỏ qua, site vẫn chạy. |
 
 > ⚠️ **Không commit `.env`** (đã có trong `.gitignore`). Email công ty nên dạng `sales@your-domain.com`.
 
@@ -126,26 +138,78 @@ Và đặt `NEXT_PUBLIC_SITE_URL` = domain thật.
 
 ---
 
-## 7. Hướng dẫn deploy (giữ SQLite + volume bền vững)
+## 6b. Đẩy lead sang Google Sheet (qua Make.com)
 
-SQLite lưu dữ liệu trong **1 file** (`ddn.db`) và ảnh upload trong thư mục **`media/`**.
-Khi deploy phải gắn **persistent volume** cho cả hai, nếu không dữ liệu sẽ mất mỗi lần deploy lại.
+Thu lead tự động có thể đồng bộ sang Google Sheet **mà app KHÔNG giữ credential Google** —
+đẩy qua 1 webhook Make.com, Make lo phần ghi Sheet.
 
-### Cách nhanh nhất — Railway
+**Cách bật:**
+1. Tạo scenario trên [Make.com](https://www.make.com): trigger **Webhooks → Custom webhook** → copy URL.
+2. Dán URL vào `.env`: `MAKE_WEBHOOK_URL=https://hook.eu2.make.com/xxxxx`
+3. Trong Make, nối webhook → module **Google Sheets → Add/Update a Row**, khớp cột theo các field
+   nhận được (xem bên dưới), dùng **`sessionId`** làm khóa để *upsert* đúng dòng (không tạo trùng).
 
-1. Push code lên GitHub (đã có `.gitignore` loại `.env`, `ddn.db`, `media/`).
-2. Tạo project mới trên [Railway](https://railway.app) → *Deploy from GitHub repo*.
-3. **Variables**: thêm `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL` (= domain Railway/domain thật),
-   `DATABASE_URI=file:/data/ddn.db`, và SMTP nếu có.
-4. **Volume**: tạo 1 volume, mount vào `/data` (chứa file DB) — và mount thêm cho `media/`
-   (hoặc trỏ upload sang `/data/media`). Đặt `DATABASE_URI=file:/data/ddn.db`.
-5. Build command: `npm run build` — Start command: `npm run start`.
-6. Sau khi deploy lần đầu, chạy `npm run seed` **một lần** (qua Railway shell) nếu muốn dữ liệu mẫu;
-   hoặc bỏ qua và tự nhập trong `/admin`.
+**App gửi POST JSON (payload phẳng)** vào 2 thời điểm — KHÔNG gửi mỗi keystroke:
+- khi lead đạt **qualified lần đầu** (email hợp lệ + product + quantity),
+- khi khách bấm **Submit** (chuyển **complete**) → Make cập nhật lại đúng dòng theo `sessionId`.
 
-> Nền tảng khác (Fly.io, VPS, Render…) tương tự: điều kiện là **file `ddn.db` và thư mục `media/`
-> nằm trên ổ đĩa bền vững**. Khi cần quy mô lớn hơn, có thể chuyển sang Postgres bằng
-> `@payloadcms/db-postgres` (đổi adapter trong `src/payload.config.ts` + migrate dữ liệu).
+Các field trong payload: `sessionId, status, product, quantityPerMonth, destinationPort, incoterm,
+packaging, targetPrice, name, company, email, phone, message, sourcePage, createdAt, lastUpdated`
+(field trống = chuỗi rỗng). Field `pushedToSheet` trong Inquiries chống đẩy trùng dòng qualified.
+
+> Make lỗi/timeout (URL sai, Make down) → **không ảnh hưởng**: lead vẫn lưu DB + email vẫn gửi,
+> chỉ ghi 1 cảnh báo trong log. Cuộc gọi Make chạy nền (non-blocking), timeout 5s.
+
+## 7. Deploy lên Vercel (Postgres Neon + Vercel Blob)
+
+Stack này serverless-friendly: **không dùng ổ đĩa local**. DB nằm trên Neon, media trên Vercel Blob.
+
+### Bước 0 — Tạo migration (một lần, trên máy có DATABASE_URI trỏ Postgres)
+
+Migration là các file SQL mô tả schema, **được commit vào repo** để Vercel tạo bảng lúc deploy.
+
+```bash
+# .env đã có DATABASE_URI trỏ Neon/Postgres
+npm run migrate:create        # sinh file trong src/migrations (đặt tên, vd: initial)
+git add src/migrations && git commit -m "Add Postgres migrations"
+```
+
+> Sau này mỗi lần đổi collection/field → chạy lại `npm run migrate:create` rồi commit file mới.
+
+### Bước 1 — Tạo Neon Postgres
+1. Vào [neon.tech](https://neon.tech) → tạo project → copy **Pooled connection** string.
+2. Đó chính là `DATABASE_URI` (đuôi có `?sslmode=require`).
+
+### Bước 2 — Tạo Vercel Blob store
+1. Vercel → **Storage → Create → Blob** → tạo store, gắn vào project.
+2. Copy **`BLOB_READ_WRITE_TOKEN`** (Vercel thường tự thêm biến này khi gắn store).
+
+### Bước 3 — Import repo vào Vercel + nhập ENV
+Vercel → **Add New → Project → Import** repo GitHub. Vào **Settings → Environment Variables**,
+nhập CHÍNH XÁC các biến sau (mục 6 mô tả chi tiết):
+
+| Biến | Bắt buộc |
+|------|:---:|
+| `PAYLOAD_SECRET` | ✅ |
+| `DATABASE_URI` | ✅ (Neon pooled) |
+| `BLOB_READ_WRITE_TOKEN` | ✅ (Vercel Blob) |
+| `NEXT_PUBLIC_SITE_URL` | ✅ (`https://your-domain.com`) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | tùy chọn (email RFQ) |
+| `MAKE_WEBHOOK_URL` | tùy chọn (đẩy Google Sheet) |
+
+### Bước 4 — Deploy → migrate chạy TỰ ĐỘNG
+- Vercel dùng script **`vercel-build`** = `payload migrate && next build`, nên **migration chạy trước
+  khi build**, tự tạo/cập nhật bảng trên Neon. Không cần thao tác thủ công.
+- Build không ghi vào ổ đĩa local; media đi thẳng lên Blob.
+
+### Bước 5 — Tạo admin đầu tiên + (tùy chọn) seed
+1. Mở `https://your-domain.com/admin` → tạo **tài khoản admin đầu tiên** (email + mật khẩu).
+2. Muốn có dữ liệu mẫu: chạy `npm run seed` **một lần** từ máy local (với `.env` trỏ Neon production),
+   hoặc tự nhập nội dung trong `/admin`.
+3. Vào **Settings** điền thông tin công ty thật; upload logo/ảnh → lưu trên Vercel Blob, hiện ngoài site.
+
+> **Thứ tự tóm tắt**: tạo Neon + Blob → nhập ENV trên Vercel → deploy (migrate tự chạy → tạo bảng)
+> → mở `/admin` tạo admin → seed/nhập nội dung.
 
 ---
 
@@ -178,3 +242,9 @@ src/
   `sitemap.xml`, `robots.txt`.
 - **Ảnh thiếu**: hiển thị ô placeholder trung tính, không dùng ảnh giả, không vỡ layout.
 - **Email RFQ**: nếu chưa cấu hình SMTP, đơn vẫn được lưu vào *Inquiries* và email được ghi ra console.
+- **Hạ tầng lưu trữ**: DB = Postgres (`@payloadcms/db-postgres`, đọc `DATABASE_URI`), media =
+  Vercel Blob (`@payloadcms/storage-vercel-blob`, đọc `BLOB_READ_WRITE_TOKEN`). Dev không có Blob
+  token → media tạm ở local disk. `serverURL`/CSRF/CORS đọc từ `NEXT_PUBLIC_SITE_URL` và tự thêm
+  cả biến thể `www` lẫn non-`www` để đăng nhập admin không lỗi domain.
+- **Migration**: schema Postgres quản lý bằng migration trong `src/migrations` (commit vào repo);
+  Vercel chạy `payload migrate` trước khi build (script `vercel-build`).
