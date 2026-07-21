@@ -68,14 +68,22 @@ const emailAdapter = process.env.SMTP_HOST
   : undefined
 
 // Lưu media lên Vercel Blob khi có token; nếu không (dev không token) -> tạm dùng local disk.
+// QUAN TRỌNG: Vercel serverless có filesystem read-only (trừ /tmp) -> nếu thiếu token,
+// KHÔNG được để rơi vào nhánh ghi đĩa cục bộ khi deploy, vì `fs.mkdir('media')` sẽ lỗi
+// ENOENT ngay khi upload (đây chính là nguyên nhân lỗi Media 500 trên production).
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 const storagePlugins = blobToken
   ? [
       vercelBlobStorage({
         enabled: true,
         token: blobToken,
+        // clientUploads: true -> browser upload thẳng lên Vercel Blob qua URL ký sẵn,
+        // không qua server function -> né giới hạn 4.5MB body của Vercel serverless.
+        clientUploads: true,
         collections: {
           // Gắn cho collection Media (mọi upload field trỏ tới Media đều đi qua đây).
+          // Không truyền disableLocalStorage -> plugin tự mặc định true, tránh 2 cơ chế
+          // lưu trữ chồng nhau (local disk + Blob) trên cùng 1 collection.
           [Media.slug]: true,
         },
       }),
