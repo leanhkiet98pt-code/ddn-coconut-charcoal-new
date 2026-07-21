@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { anyone, authenticated } from '../access'
+import { revalidateHome } from '../hooks/revalidate'
 
 // Toggle bật/tắt dùng chung cho mỗi section.
 const enabledField = {
@@ -19,6 +20,7 @@ export const Home: GlobalConfig = {
   label: 'Home Page',
   admin: { group: 'Configuration' },
   access: { read: anyone, update: authenticated },
+  hooks: { afterChange: [revalidateHome] },
   fields: [
     {
       type: 'tabs',

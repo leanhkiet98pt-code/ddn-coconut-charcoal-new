@@ -19,7 +19,11 @@ import { ExportMapSection } from '../../../components/sections/ExportMapSection'
 import { BuyingProcess } from '../../../components/sections/BuyingProcess'
 import { FaqSection } from '../../../components/sections/FaqSection'
 import { RfqCta } from '../../../components/sections/RfqCta'
-import { withFallback } from '../../../lib/utils'
+import { withFallback, safeCatch } from '../../../lib/utils'
+
+// An toàn dự phòng: nếu revalidatePath (hook afterChange của Home/Settings/...) không tới kịp,
+// trang chủ vẫn tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -35,12 +39,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   // Kéo toàn bộ dữ liệu song song để trang tải nhanh.
   const [home, settings, categories, products, certificates, markets, t] = await Promise.all([
-    getHome(l).catch(() => null),
-    getSettings(l).catch(() => null),
-    getCategories(l).catch(() => []),
-    getProducts(l).catch(() => []),
-    getCertificates(l).catch(() => []),
-    getExportMarkets(l).catch(() => []),
+    getHome(l).catch(safeCatch('home:getHome', null)),
+    getSettings(l).catch(safeCatch('home:getSettings', null)),
+    getCategories(l).catch(safeCatch('home:getCategories', [])),
+    getProducts(l).catch(safeCatch('home:getProducts', [])),
+    getCertificates(l).catch(safeCatch('home:getCertificates', [])),
+    getExportMarkets(l).catch(safeCatch('home:getExportMarkets', [])),
     getTranslations('home'),
   ])
 

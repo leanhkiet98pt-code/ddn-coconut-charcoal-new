@@ -5,6 +5,10 @@ import { buildMetadata } from '../../../../lib/seo'
 import { getSettings } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { RfqForm } from '../../../../components/forms/RfqForm'
+import { safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -18,7 +22,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   const l = locale as AppLocale
 
   const [settings, t, tr] = await Promise.all([
-    getSettings(l).catch(() => null),
+    getSettings(l).catch(safeCatch('contact:getSettings', null)),
     getTranslations('contact'),
     getTranslations('rfq'),
   ])

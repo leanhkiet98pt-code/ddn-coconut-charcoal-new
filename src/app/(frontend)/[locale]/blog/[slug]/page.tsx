@@ -8,12 +8,16 @@ import { mediaUrl } from '../../../../../lib/media'
 import { buildMetadata } from '../../../../../lib/seo'
 import { MediaImage } from '../../../../../components/ui/MediaImage'
 import { RichText } from '../../../../../components/ui/RichText'
+import { safeCatch } from '../../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
-  const post = await getPostBySlug(slug, locale as AppLocale).catch(() => null)
+  const post = await getPostBySlug(slug, locale as AppLocale).catch(safeCatch('blogDetail.generateMetadata:getPostBySlug', null))
   if (!post) return {}
   const img = mediaUrl(post.coverImage, 'feature')
   return buildMetadata({
@@ -30,7 +34,7 @@ export default async function BlogDetailPage({ params }: Props) {
   setRequestLocale(locale)
   const l = locale as AppLocale
 
-  const post = await getPostBySlug(slug, l).catch(() => null)
+  const post = await getPostBySlug(slug, l).catch(safeCatch('blogDetail:getPostBySlug', null))
   if (!post) notFound()
 
   const [tc, format] = await Promise.all([getTranslations('common'), getFormatter()])

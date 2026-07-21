@@ -5,6 +5,10 @@ import { buildMetadata } from '../../../../lib/seo'
 import { getPosts } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { PostCard } from '../../../../components/cards/PostCard'
+import { safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -18,7 +22,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   const l = locale as AppLocale
 
   const [posts, t, tc] = await Promise.all([
-    getPosts(l).catch(() => []),
+    getPosts(l).catch(safeCatch('blog:getPosts', [])),
     getTranslations('blog'),
     getTranslations('common'),
   ])

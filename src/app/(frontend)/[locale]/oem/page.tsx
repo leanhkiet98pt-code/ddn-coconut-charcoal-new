@@ -7,11 +7,15 @@ import { PageHeader } from '../../../../components/ui/PageHeader'
 import { MediaImage } from '../../../../components/ui/MediaImage'
 import { RichText } from '../../../../components/ui/RichText'
 import { RfqCta } from '../../../../components/sections/RfqCta'
-import { withFallback } from '../../../../lib/utils'
+import { withFallback, safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: nếu hook afterChange của Pages không tới kịp, trang vẫn tự làm mới
+// tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
-  const pages = await getPages(locale as AppLocale).catch(() => null)
+  const pages = await getPages(locale as AppLocale).catch(safeCatch('oem.generateMetadata:getPages', null))
   const t = await getTranslations({ locale, namespace: 'oem' })
   return buildMetadata({
     locale: locale as AppLocale,
@@ -27,7 +31,7 @@ export default async function OemPage({ params }: { params: Promise<{ locale: st
   const l = locale as AppLocale
 
   const [pages, t, tc] = await Promise.all([
-    getPages(l).catch(() => null),
+    getPages(l).catch(safeCatch('oem:getPages', null)),
     getTranslations('oem'),
     getTranslations('common'),
   ])

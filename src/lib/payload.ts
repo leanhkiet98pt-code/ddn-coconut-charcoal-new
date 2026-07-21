@@ -1,7 +1,9 @@
 import 'server-only'
 import { getPayload } from 'payload'
+import { unstable_cache } from 'next/cache'
 import config from '@payload-config'
 import type { AppLocale } from '../i18n/routing'
+import { CACHE_TAGS } from './cacheTags'
 
 /**
  * Tầng truy cập dữ liệu Payload cho Server Components.
@@ -13,20 +15,44 @@ export async function getPayloadClient() {
 
 const FALLBACK: AppLocale = 'en'
 
-export async function getSettings(locale: AppLocale) {
-  const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'settings', locale, fallbackLocale: FALLBACK, depth: 2 })
-}
+/**
+ * getSettings/getHome/getPages đọc trực tiếp Postgres qua Payload Local API (KHÔNG qua
+ * fetch()), nên Next.js không tự nhận diện được để tham gia Data Cache / Full Route Cache.
+ * Hệ quả thực tế: trang liên quan bị Next build tĩnh 1 lần rồi đóng băng, Save trong /admin
+ * không đẩy ra frontend cho tới khi redeploy.
+ * -> Bọc unstable_cache() gắn tag để (1) hưởng ISR revalidate=60 ở page, và quan trọng hơn
+ *    (2) cho phép `revalidateTag()` trong hooks/revalidate.ts xoá đúng cache khi admin Save,
+ *    thấy cập nhật ngay không cần đợi 60s hay redeploy.
+ */
+const cachedGetSettings = unstable_cache(
+  async (locale: AppLocale) => {
+    const payload = await getPayloadClient()
+    return payload.findGlobal({ slug: 'settings', locale, fallbackLocale: FALLBACK, depth: 2 })
+  },
+  ['global-settings'],
+  { tags: [CACHE_TAGS.settings], revalidate: 60 },
+)
+export const getSettings = (locale: AppLocale) => cachedGetSettings(locale)
 
-export async function getHome(locale: AppLocale) {
-  const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'home', locale, fallbackLocale: FALLBACK, depth: 2 })
-}
+const cachedGetHome = unstable_cache(
+  async (locale: AppLocale) => {
+    const payload = await getPayloadClient()
+    return payload.findGlobal({ slug: 'home', locale, fallbackLocale: FALLBACK, depth: 2 })
+  },
+  ['global-home'],
+  { tags: [CACHE_TAGS.home], revalidate: 60 },
+)
+export const getHome = (locale: AppLocale) => cachedGetHome(locale)
 
-export async function getPages(locale: AppLocale) {
-  const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'pages', locale, fallbackLocale: FALLBACK, depth: 2 })
-}
+const cachedGetPages = unstable_cache(
+  async (locale: AppLocale) => {
+    const payload = await getPayloadClient()
+    return payload.findGlobal({ slug: 'pages', locale, fallbackLocale: FALLBACK, depth: 2 })
+  },
+  ['global-pages'],
+  { tags: [CACHE_TAGS.pages], revalidate: 60 },
+)
+export const getPages = (locale: AppLocale) => cachedGetPages(locale)
 
 export async function getCategories(locale: AppLocale) {
   const payload = await getPayloadClient()

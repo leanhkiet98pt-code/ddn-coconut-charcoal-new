@@ -7,7 +7,10 @@ import { getProducts, getCategories } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { ProductCard } from '../../../../components/cards/ProductCard'
 import { RfqCta } from '../../../../components/sections/RfqCta'
-import { cn } from '../../../../lib/utils'
+import { cn, safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -27,8 +30,8 @@ export default async function ProductsPage({ params, searchParams }: Props) {
   const l = locale as AppLocale
 
   const [products, categories, t, tc] = await Promise.all([
-    getProducts(l, category).catch(() => []),
-    getCategories(l).catch(() => []),
+    getProducts(l, category).catch(safeCatch('products:getProducts', [])),
+    getCategories(l).catch(safeCatch('products:getCategories', [])),
     getTranslations('products'),
     getTranslations('common'),
   ])

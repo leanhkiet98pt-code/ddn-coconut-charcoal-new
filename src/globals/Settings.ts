@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { anyone, authenticated } from '../access'
+import { revalidateSettings } from '../hooks/revalidate'
 
 /**
  * Cấu hình toàn site: tên công ty, pháp nhân, liên hệ, mạng xã hội, số liệu trust bar, logo.
@@ -10,6 +11,7 @@ export const Settings: GlobalConfig = {
   label: 'Settings',
   admin: { group: 'Configuration' },
   access: { read: anyone, update: authenticated },
+  hooks: { afterChange: [revalidateSettings] },
   fields: [
     {
       type: 'tabs',

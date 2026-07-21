@@ -6,6 +6,10 @@ import { getCertificates } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { CertificateCard } from '../../../../components/cards/CertificateCard'
 import { RfqCta } from '../../../../components/sections/RfqCta'
+import { safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -19,7 +23,7 @@ export default async function CertificatesPage({ params }: { params: Promise<{ l
   const l = locale as AppLocale
 
   const [certs, t, tc] = await Promise.all([
-    getCertificates(l).catch(() => []),
+    getCertificates(l).catch(safeCatch('certificates:getCertificates', [])),
     getTranslations('certificates'),
     getTranslations('common'),
   ])

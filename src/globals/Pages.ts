@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { anyone, authenticated } from '../access'
+import { revalidatePages } from '../hooks/revalidate'
 
 /**
  * Nội dung biên tập cho các trang tĩnh (About, OEM) — để chủ doanh nghiệp sửa trong CMS,
@@ -10,6 +11,7 @@ export const Pages: GlobalConfig = {
   label: 'Pages (About / OEM)',
   admin: { group: 'Configuration' },
   access: { read: anyone, update: authenticated },
+  hooks: { afterChange: [revalidatePages] },
   fields: [
     {
       type: 'tabs',

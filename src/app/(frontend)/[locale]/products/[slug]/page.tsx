@@ -12,13 +12,17 @@ import { SpecTable } from '../../../../../components/products/SpecTable'
 import { RichText } from '../../../../../components/ui/RichText'
 import { RfqForm } from '../../../../../components/forms/RfqForm'
 import { JsonLd } from '../../../../../components/seo/JsonLd'
+import { safeCatch } from '../../../../../lib/utils'
 import type { Category } from '../../../../../payload-types'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
-  const product = await getProductBySlug(slug, locale as AppLocale).catch(() => null)
+  const product = await getProductBySlug(slug, locale as AppLocale).catch(safeCatch('productDetail.generateMetadata:getProductBySlug', null))
   if (!product) return {}
   const title = product.seo?.title || product.title
   const description = product.seo?.description || product.shortDescription || undefined
@@ -37,7 +41,7 @@ export default async function ProductDetailPage({ params }: Props) {
   setRequestLocale(locale)
   const l = locale as AppLocale
 
-  const product = await getProductBySlug(slug, l).catch(() => null)
+  const product = await getProductBySlug(slug, l).catch(safeCatch('productDetail:getProductBySlug', null))
   if (!product) notFound()
 
   const [t, tc] = await Promise.all([getTranslations('products'), getTranslations('common')])

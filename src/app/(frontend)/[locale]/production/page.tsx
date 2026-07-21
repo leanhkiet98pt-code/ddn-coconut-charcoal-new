@@ -6,7 +6,10 @@ import { getProductionSteps } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { MediaImage } from '../../../../components/ui/MediaImage'
 import { RfqCta } from '../../../../components/sections/RfqCta'
-import { cn } from '../../../../lib/utils'
+import { cn, safeCatch } from '../../../../lib/utils'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -20,7 +23,7 @@ export default async function ProductionPage({ params }: { params: Promise<{ loc
   const l = locale as AppLocale
 
   const [steps, t, tc] = await Promise.all([
-    getProductionSteps(l).catch(() => []),
+    getProductionSteps(l).catch(safeCatch('production:getProductionSteps', [])),
     getTranslations('production'),
     getTranslations('common'),
   ])

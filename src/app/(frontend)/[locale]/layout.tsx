@@ -7,7 +7,7 @@ import { Inter, Sora } from 'next/font/google'
 import { routing, type AppLocale } from '../../../i18n/routing'
 import { getSettings } from '../../../lib/payload'
 import { mediaUrl } from '../../../lib/media'
-import { withFallback } from '../../../lib/utils'
+import { withFallback, safeCatch } from '../../../lib/utils'
 import { SITE_URL } from '../../../lib/seo'
 import { buildOrganizationSchema } from '../../../lib/schema'
 import { Header } from '../../../components/layout/Header'
@@ -24,11 +24,15 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
+// An toàn dự phòng: nếu vì lý do gì đó revalidatePath (hook afterChange) không chạy tới,
+// trang vẫn tự làm mới tối đa sau 60s thay vì đóng băng vĩnh viễn từ lúc build trên Vercel.
+export const revalidate = 60
+
 // Metadata gốc: metadataBase (cho canonical/hreflang tương đối), title template, mô tả mặc định.
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'meta' })
-  const settings = await getSettings(locale as AppLocale).catch(() => null)
+  const settings = await getSettings(locale as AppLocale).catch(safeCatch('layout.generateMetadata:getSettings', null))
   const siteName = withFallback(settings?.companyName ?? '', t('defaultTitle'))
   return {
     metadataBase: new URL(SITE_URL),
@@ -50,7 +54,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale)
 
   const typedLocale = locale as AppLocale
-  const settings = await getSettings(typedLocale).catch(() => null)
+  const settings = await getSettings(typedLocale).catch(safeCatch('layout:getSettings', null))
   const companyName = withFallback(settings?.companyName ?? '', 'Charcoal Export Co.')
   const logoUrl = mediaUrl(settings?.logo)
 

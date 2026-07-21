@@ -5,7 +5,11 @@ import { buildMetadata } from '../../../../lib/seo'
 import { getExportMarkets } from '../../../../lib/payload'
 import { PageHeader } from '../../../../components/ui/PageHeader'
 import { RfqCta } from '../../../../components/sections/RfqCta'
+import { safeCatch } from '../../../../lib/utils'
 import type { ExportMarket } from '../../../../payload-types'
+
+// An toàn dự phòng: tự làm mới tối đa sau 60s thay vì đóng băng từ lúc build trên Vercel.
+export const revalidate = 60
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -19,7 +23,7 @@ export default async function ExportMarketsPage({ params }: { params: Promise<{ 
   const l = locale as AppLocale
 
   const [markets, t, tc] = await Promise.all([
-    getExportMarkets(l).catch(() => []),
+    getExportMarkets(l).catch(safeCatch('exportMarkets:getExportMarkets', [])),
     getTranslations('exportMarkets'),
     getTranslations('common'),
   ])
