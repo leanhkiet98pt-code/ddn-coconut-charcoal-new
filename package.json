@@ -12,7 +12,7 @@
     "devsafe": "rimraf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "vercel-build": "payload migrate && next build",
+    "vercel-build": "payload migrate && payload generate:importmap && next build",
     "lint": "next lint",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/index.ts",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
