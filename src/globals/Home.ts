@@ -60,6 +60,18 @@ export const Home: GlobalConfig = {
                 enabledField,
                 { name: 'title', type: 'text', localized: true },
                 { name: 'subtitle', type: 'textarea', localized: true },
+                {
+                  name: 'featuredProducts',
+                  label: 'Featured Products',
+                  type: 'relationship',
+                  relationTo: 'products',
+                  hasMany: true,
+                  maxRows: 8,
+                  admin: {
+                    description:
+                      'Select and order the products displayed on the home page. Leave empty to automatically show the first 4 products.',
+                  },
+                },
               ],
             },
             {
@@ -87,6 +99,18 @@ export const Home: GlobalConfig = {
                 enabledField,
                 { name: 'title', type: 'text', localized: true },
                 { name: 'subtitle', type: 'textarea', localized: true },
+                {
+                  name: 'featuredCertificates',
+                  label: 'Featured Certificates / Documents',
+                  type: 'relationship',
+                  relationTo: 'certificates',
+                  hasMany: true,
+                  maxRows: 8,
+                  admin: {
+                    description:
+                      'Select and order certificates or documents displayed on the home page. Leave empty to automatically show all certificates.',
+                  },
+                },
               ],
             },
             {

@@ -1,28 +1,22 @@
 import { getTranslations } from 'next-intl/server'
 import { Link } from '../../i18n/navigation'
 import { SectionHeading } from '../ui/SectionHeading'
-import { CategoryCard } from '../cards/CategoryCard'
 import { ProductCard } from '../cards/ProductCard'
-import type { Home, Category, Product } from '../../payload-types'
+import type { Home, Product } from '../../payload-types'
 import { withFallback } from '../../lib/utils'
 
 type Props = {
   data: Home['productGroups']
-  categories: Category[]
+  /** Đã resolve sẵn ở page.tsx: ưu tiên featuredProducts admin chọn, fallback 4 sản phẩm đầu. */
   products: Product[]
 }
 
-/**
- * Section "Product Groups" trên trang chủ.
- * Ưu tiên hiển thị category; nếu chưa có category thì fallback hiển thị vài product.
- */
-export async function ProductGroups({ data, categories, products }: Props) {
+/** Section "Product Groups" trên trang chủ — hiển thị đúng các sản phẩm đã chọn (giữ thứ tự). */
+export async function ProductGroups({ data, products }: Props) {
   const t = await getTranslations('home')
   const tc = await getTranslations('common')
   const title = withFallback(data?.title ?? '', t('productGroupsTitle'))
   const subtitle = withFallback(data?.subtitle ?? '', t('productGroupsSubtitle'))
-
-  const hasCategories = categories.length > 0
 
   return (
     <section className="section bg-sand">
@@ -30,15 +24,9 @@ export async function ProductGroups({ data, categories, products }: Props) {
         <SectionHeading eyebrow={t('productGroupsTitle')} title={title} subtitle={subtitle} />
 
         <div className="mt-12">
-          {hasCategories ? (
-            <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-              {categories.map((c) => (
-                <CategoryCard key={c.id} category={c} />
-              ))}
-            </div>
-          ) : products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {products.slice(0, 6).map((p) => (
+          {products.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {products.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
             </div>

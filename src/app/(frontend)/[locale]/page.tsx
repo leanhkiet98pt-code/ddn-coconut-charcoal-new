@@ -5,11 +5,11 @@ import { buildMetadata } from '../../../lib/seo'
 import {
   getHome,
   getSettings,
-  getCategories,
   getProducts,
   getCertificates,
   getExportMarkets,
 } from '../../../lib/payload'
+import type { Certificate, Product } from '../../../payload-types'
 import { Hero } from '../../../components/sections/Hero'
 import { TrustBar } from '../../../components/sections/TrustBar'
 import { ProductGroups } from '../../../components/sections/ProductGroups'
@@ -38,10 +38,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const l = locale as AppLocale
 
   // Kéo toàn bộ dữ liệu song song để trang tải nhanh.
-  const [home, settings, categories, products, certificates, markets, t] = await Promise.all([
+  const [home, settings, products, certificates, markets, t] = await Promise.all([
     getHome(l).catch(safeCatch('home:getHome', null)),
     getSettings(l).catch(safeCatch('home:getSettings', null)),
-    getCategories(l).catch(safeCatch('home:getCategories', [])),
     getProducts(l).catch(safeCatch('home:getProducts', [])),
     getCertificates(l).catch(safeCatch('home:getCertificates', [])),
     getExportMarkets(l).catch(safeCatch('home:getExportMarkets', [])),
@@ -51,16 +50,32 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // Section bật khi enabled !== false (mặc định bật kể cả khi chưa cấu hình Home).
   const on = (s?: { enabled?: boolean | null }) => s?.enabled !== false
 
+  // Product Groups: ưu tiên sản phẩm admin đã chọn thủ công (giữ đúng thứ tự đã sắp trong Admin);
+  // chưa chọn gì -> fallback 4 sản phẩm đầu tiên để section không bị trống.
+  const manuallyFeaturedProducts = (home?.productGroups?.featuredProducts ?? []).filter(
+    (p): p is Product => typeof p === 'object' && p !== null,
+  )
+  const productGroupsProducts =
+    manuallyFeaturedProducts.length > 0 ? manuallyFeaturedProducts : products.slice(0, 4)
+
+  // Certificates: tương tự — ưu tiên lựa chọn thủ công, fallback toàn bộ chứng chỉ đã có.
+  // Không có chứng chỉ thật nào -> mảng rỗng, section tự ẩn card giả (xử lý trong CertificatesSection).
+  const manuallyFeaturedCertificates = (home?.certificates?.featuredCertificates ?? []).filter(
+    (c): c is Certificate => typeof c === 'object' && c !== null,
+  )
+  const certificatesForHome =
+    manuallyFeaturedCertificates.length > 0 ? manuallyFeaturedCertificates : certificates
+
   return (
     <>
       {on(home?.hero) && <Hero hero={home?.hero} settings={settings} />}
       {on(home?.trustBar) && <TrustBar settings={settings} />}
       {on(home?.productGroups) && (
-        <ProductGroups data={home?.productGroups} categories={categories} products={products} />
+        <ProductGroups data={home?.productGroups} products={productGroupsProducts} />
       )}
       {on(home?.factory) && <FactorySection data={home?.factory} />}
       {on(home?.certificates) && (
-        <CertificatesSection data={home?.certificates} certificates={certificates} />
+        <CertificatesSection data={home?.certificates} certificates={certificatesForHome} />
       )}
       {on(home?.exportMap) && <ExportMapSection data={home?.exportMap} markets={markets} />}
       {on(home?.buyingProcess) && <BuyingProcess data={home?.buyingProcess} />}

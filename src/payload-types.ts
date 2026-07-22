@@ -987,6 +987,10 @@ export interface Home {
     enabled?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
+    /**
+     * Select and order the products displayed on the home page. Leave empty to automatically show the first 4 products.
+     */
+    featuredProducts?: (number | Product)[] | null;
   };
   factory?: {
     /**
@@ -1013,6 +1017,10 @@ export interface Home {
     enabled?: boolean | null;
     title?: string | null;
     subtitle?: string | null;
+    /**
+     * Select and order certificates or documents displayed on the home page. Leave empty to automatically show all certificates.
+     */
+    featuredCertificates?: (number | Certificate)[] | null;
   };
   exportMap?: {
     /**
@@ -1201,6 +1209,7 @@ export interface HomeSelect<T extends boolean = true> {
         enabled?: T;
         title?: T;
         subtitle?: T;
+        featuredProducts?: T;
       };
   factory?:
     | T
@@ -1222,6 +1231,7 @@ export interface HomeSelect<T extends boolean = true> {
         enabled?: T;
         title?: T;
         subtitle?: T;
+        featuredCertificates?: T;
       };
   exportMap?:
     | T
